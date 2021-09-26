@@ -93,7 +93,7 @@ unsigned short MCP3008::read(const unsigned int channel) const {
         count);
 
     if(bytesTransferred < 0) {
-        throw std::runtime_error("spi transfer failed")
+        throw std::runtime_error("spi transfer failed");
     }
 
     return ((rxData[1] << 8) | rxData[2]) & 0x3ff;
