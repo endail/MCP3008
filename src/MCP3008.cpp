@@ -81,15 +81,15 @@ unsigned short MCP3008::read(const std::uint8_t channel) const {
 
     const std::uint8_t txData[count] = {
         1,
-        static_cast<std::uint8_t>(0b10000000) | (channel << 4),
+        static_cast<std::uint8_t>(0b10000000 | (channel << 4)),
         0 };
 
     std::uint8_t rxData[count]{0};
 
     const int bytesTransferred = ::lgSpiXfer(
         this->_handle,
-        static_cast<const char*>(txData),
-        static_cast<char*>(rxData),
+        reinterpret_cast<const char*>(txData),
+        reinterpret_cast<char*>(rxData),
         count);
 
     if(bytesTransferred < 0) {
