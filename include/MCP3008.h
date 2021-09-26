@@ -20,10 +20,48 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include "../include/template.h"
-#include <cstdint>
-#include <lgpio.h>
+#ifndef MCP3008_H_AA185758_F169_4B8A_8158_6E4588F5B55F
+#define MCP3008_H_AA185758_F169_4B8A_8158_6E4588F5B55F
 
-namespace template {
+#include <linux/spi/spidev.h>
+
+/**
+ * Datasheet
+ * https://cdn-shop.adafruit.com/datasheets/MCP3008.pdf
+ */
+
+namespace MCP3008 {
+class MCP3008 {
+protected:
+    int _handle;
+    int _dev;
+    int _channel;
+    int _baud;
+    int _flags;
+
+public:
+
+    const int DEFAULT_SPI_DEV = 1;
+    const int DEFAULT_SPI_CHANNEL = 1;
+    const int SPI_5V_BAUD = 3600000;
+    const int SPI_2_7V_BAUD = 1350000;
+    const int DEFAULT_SPI_BAUD = SPI_2_7V_BAUD;
+
+    //https://www.analog.com/en/analog-dialogue/articles/introduction-to-spi-interface.html
+    const int DEFAULT_SPI_FLAGS = SPI_MODE_0;
+
+    MCP3008(
+        const int dev = DEFAULT_SPI_DEV,
+        const int channel = DEFAULT_SPI_CHANNEL,
+        const int baud = DEFAULT_SPI_BAUD,
+        const int flags  = DEFAULT_SPI_FLAGS) noexcept;
+    
+    ~MCP3008();
+
+    void connect();
+    void disconnect();
+    unsigned short read(const unsigned int channel) const;
 
 };
+};
+#endif
