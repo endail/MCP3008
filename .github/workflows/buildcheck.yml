@@ -1,0 +1,34 @@
+name: Build on Raspberry Pi
+on:
+  push:
+    paths:
+      - "include/**"
+      - "src/**"
+      - "gh-actions-rpi-cmd.sh"
+      - "install-deps.sh"
+  workflow_dispatch:
+
+jobs:
+
+  build:
+
+    name: Build on ${{ matrix.cpu }}
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        base_image: ["raspios_lite:2021-05-07"]
+        cpu: [arm1176, cortex-a8]
+
+    steps:
+    
+    - name: Checkout repo
+      uses: actions/checkout@v2
+    
+    - name: Build RPI environment
+      uses: pguyot/arm-runner-action@v1
+      with:
+        commands: ./gh-actions-rpi-cmd.sh
+        base_image: ${{ matrix.base_image }}
+        image_additional_mb: 10000
+        cpu: ${{ matrix.cpu }}
+        optimize_image: false
