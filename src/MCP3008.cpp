@@ -31,12 +31,12 @@ MCP3008::MCP3008(
     const int dev,
     const int channel,
     const int baud,
-    const int flags) :
+    const int flags) noexcept :
         _handle(-1),
         _dev(dev),
         _channel(channel),
         _baud(baud),
-        _flags(flags) noexcept {
+        _flags(flags) {
 }
 
 MCP3008::~MCP3008() {
@@ -75,11 +75,11 @@ void MCP3008::disconnect() {
 
 }
 
-unsigned short MCP3008::read(const unsigned int channel) const {
+unsigned short MCP3008::read(const std::uint8_t channel) const {
 
     const int count = 3;
 
-    std::uint8_t txData[count] = {
+    const std::uint8_t txData[count] = {
         1,
         0b10000000 | (channel << 4),
         0 };

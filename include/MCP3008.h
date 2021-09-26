@@ -60,7 +60,7 @@ public:
 
     void connect();
     void disconnect();
-    unsigned short read(const unsigned int channel) const;
+    unsigned short read(const std::uint8_t channel) const;
 
 };
 };
