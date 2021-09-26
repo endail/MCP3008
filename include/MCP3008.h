@@ -23,6 +23,7 @@
 #ifndef MCP3008_H_AA185758_F169_4B8A_8158_6E4588F5B55F
 #define MCP3008_H_AA185758_F169_4B8A_8158_6E4588F5B55F
 
+#include <cstdint>
 #include <linux/spi/spidev.h>
 
 /**
