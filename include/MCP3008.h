@@ -41,14 +41,14 @@ protected:
 
 public:
 
-    const int DEFAULT_SPI_DEV = 1;
-    const int DEFAULT_SPI_CHANNEL = 1;
-    const int SPI_5V_BAUD = 3600000;
-    const int SPI_2_7V_BAUD = 1350000;
-    const int DEFAULT_SPI_BAUD = SPI_2_7V_BAUD;
+    static const int DEFAULT_SPI_DEV = 1;
+    static const int DEFAULT_SPI_CHANNEL = 1;
+    static const int SPI_5V_BAUD = 3600000;
+    static const int SPI_2_7V_BAUD = 1350000;
+    static const int DEFAULT_SPI_BAUD = SPI_2_7V_BAUD;
 
     //https://www.analog.com/en/analog-dialogue/articles/introduction-to-spi-interface.html
-    const int DEFAULT_SPI_FLAGS = SPI_MODE_0;
+    static const int DEFAULT_SPI_FLAGS = SPI_MODE_0;
 
     MCP3008(
         const int dev = DEFAULT_SPI_DEV,
