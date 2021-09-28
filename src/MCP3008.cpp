@@ -79,10 +79,19 @@ unsigned short MCP3008::read(const std::uint8_t channel) const {
 
     const int count = 3;
 
+    std::uint8_t cmd = 0b11 << 6;
+    cmd |= (channel & 0x07) << 3;
+
+    //const std::uint8_t txData[count] = {
+    //    1,
+    //    static_cast<std::uint8_t>(0b11000000 | (channel & 0x07) << 3),
+    //    0 };
+
     const std::uint8_t txData[count] = {
-        1,
-        static_cast<std::uint8_t>(0b11000000 | (channel & 0x07) << 3),
-        0 };
+        cmd,
+        0,
+        0
+    };
 
     std::uint8_t rxData[count]{0};
 
