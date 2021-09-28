@@ -81,7 +81,7 @@ unsigned short MCP3008::read(const std::uint8_t channel) const {
 
     const std::uint8_t txData[count] = {
         1,
-        static_cast<std::uint8_t>(0b10000000 | (channel << 4)),
+        static_cast<std::uint8_t>(0b11000000 | (channel & 0x07) << 3),
         0 };
 
     std::uint8_t rxData[count]{0};
@@ -97,8 +97,9 @@ unsigned short MCP3008::read(const std::uint8_t channel) const {
     }
 
     return (
-        (static_cast<unsigned short>(rxData[1]) << 8) |
-         static_cast<unsigned short>(rxData[2])
+        ((static_cast<unsigned short>(rxData[0]) & 0x01) << 9) |
+        ((static_cast<unsigned short>(rxData[1]) & 0xff) << 1) |
+        ((static_cast<unsigned short>(rxData[2]) & 0x80) >> 7)
     ) & 0x3ff;
 
 }
