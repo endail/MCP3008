@@ -5,7 +5,8 @@
 Raspberry Pi C++ API for MCP3008 or MCP3004.
 
 ```cpp
-MCP3008::MCP3008 adc;
+using namespace MCP3008Lib;
+MCP3008 adc;
 adc.connect();
 adc.read(0); //read mcp300x channel 0
 ```
