@@ -108,7 +108,7 @@ unsigned short MCP3008::read(const std::uint8_t channel, const Mode m) const {
     //no need to AND with 0x3ff this way
     return 
         ((static_cast<unsigned short>(rxData[1]) & 0b00000011) << 8) |
-          static_cast<unsigned short>(rxData[2]) & 0b11111111;
+         (static_cast<unsigned short>(rxData[2]) & 0b11111111);
 
 }
 
