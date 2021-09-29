@@ -33,14 +33,12 @@
 
 namespace MCP3008 {
 class MCP3008 {
-protected:
-    int _handle;
-    int _dev;
-    int _channel;
-    int _baud;
-    int _flags;
-
 public:
+
+    enum class Mode : std::uint8_t {
+        SINGLE = 1,
+        DIFFERENTIAL = 0
+    };
 
     static const int DEFAULT_SPI_DEV = 1;
     static const int DEFAULT_SPI_CHANNEL = 1;
@@ -61,7 +59,15 @@ public:
 
     void connect();
     void disconnect();
-    unsigned short read(const std::uint8_t channel) const;
+    unsigned short read(const std::uint8_t channel, const Mode m = Mode::SINGLE) const;
+
+
+protected:
+    int _handle;
+    int _dev;
+    int _channel;
+    int _baud;
+    int _flags;
 
 };
 };

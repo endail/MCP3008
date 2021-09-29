@@ -75,43 +75,40 @@ void MCP3008::disconnect() {
 
 }
 
-unsigned short MCP3008::read(const std::uint8_t channel) const {
+unsigned short MCP3008::read(const std::uint8_t channel, const Mode m) const {
 
-    const int count = 3;
+    //control bits
+    //first bit is single or differential mode
+    //next three bits are channel selection
+    //last four bits are ignored
+    const std::uint8_t ctrl =
+        (static_cast<std::uint8_t>(m) << 7) |
+         static_cast<std::uint8_t>((channel & 0b00000111) << 4)
+        ;
 
-    //std::uint8_t cmd = 0b11 << 6;
-    //cmd |= (channel & 0x07) << 3;
+    const std::uint8_t txData[3] = {
+        0b00000001, //seven leading zeros and start bit
+        ctrl,       //sgl/diff (mode), d2, d1, d0, 4x "don't care" bits
+        0b00000000  //8x "don't care" bits
+        };
 
-    const std::uint8_t txData[count] = {
-        1,
-        static_cast<std::uint8_t>(0b10000000 | (channel << 4)),
-        0 };
-
-    //const std::uint8_t txData[count] = {
-    //    cmd,
-    //    0,
-    //    0
-    //};
-
-    std::uint8_t rxData[count]{0};
+    std::uint8_t rxData[3]{0};
 
     const int bytesTransferred = ::lgSpiXfer(
         this->_handle,
         reinterpret_cast<const char*>(txData),
         reinterpret_cast<char*>(rxData),
-        count);
+        3);
 
     if(bytesTransferred < 0) {
         throw std::runtime_error("spi transfer failed");
     }
 
-    //return (
-    //    ((static_cast<unsigned short>(rxData[0]) & 0x01) << 9) |
-    //    ((static_cast<unsigned short>(rxData[1]) & 0xff) << 1) |
-    //    ((static_cast<unsigned short>(rxData[2]) & 0x80) >> 7)
-    //) & 0x3ff;
-
-    return ((rxData[1] << 8) | rxData[2]) & 0x3FF;
+    //first 14 bits are ignored
+    //no need to AND with 0x3ff this way
+    return 
+        (static_cast<unsigned short>(rxData[1]) & 0b00000011 << 8) |
+         static_cast<unsigned short>(rxData[2]) & 0b11111111;
 
 }
 
