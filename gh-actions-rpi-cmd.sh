@@ -5,3 +5,4 @@ apt-get update -y && apt-get full-upgrade -y
 ./install-deps.sh
 
 g++ -Wall -Wextra -o test src/MCP3008.cpp tests/test.cpp -Iinclude -llgpio
+size test
