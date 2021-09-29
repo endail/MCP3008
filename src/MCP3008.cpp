@@ -25,7 +25,7 @@
 #include <lgpio.h>
 #include <stdexcept>
 
-namespace MCP3008 {
+namespace MCP3008Lib {
 
 MCP3008::MCP3008(
     const int dev,

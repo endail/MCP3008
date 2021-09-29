@@ -5,7 +5,9 @@
 
 int main() {
 
-    MCP3008::MCP3008 adc;
+    using namespace MCP3008Lib;
+
+    MCP3008 adc;
     adc.connect();
 
     while(true) {

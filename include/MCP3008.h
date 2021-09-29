@@ -31,7 +31,7 @@
  * https://cdn-shop.adafruit.com/datasheets/MCP3008.pdf
  */
 
-namespace MCP3008 {
+namespace MCP3008Lib {
 class MCP3008 {
 public:
 
@@ -40,8 +40,8 @@ public:
         DIFFERENTIAL = 0
     };
 
-    static const int DEFAULT_SPI_DEV = 1;
-    static const int DEFAULT_SPI_CHANNEL = 1;
+    static const int DEFAULT_SPI_DEV = 0;
+    static const int DEFAULT_SPI_CHANNEL = 0;
     static const int SPI_5V_BAUD = 3600000;
     static const int SPI_2_7V_BAUD = 1350000;
     static const int DEFAULT_SPI_BAUD = SPI_2_7V_BAUD;
@@ -55,7 +55,7 @@ public:
         const int baud = DEFAULT_SPI_BAUD,
         const int flags  = DEFAULT_SPI_FLAGS) noexcept;
     
-    ~MCP3008();
+    virtual ~MCP3008();
 
     void connect();
     void disconnect();
