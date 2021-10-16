@@ -100,7 +100,7 @@ unsigned short MCP3008::read(const std::uint8_t channel, const Mode m) const {
         reinterpret_cast<char*>(rxData),
         3);
 
-    if(bytesTransferred < 0) {
+    if(bytesTransferred != 3) {
         throw std::runtime_error("spi transfer failed");
     }
 
