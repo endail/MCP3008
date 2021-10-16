@@ -49,7 +49,7 @@ void MCP3008::connect() {
         return;
     }
 
-    const int handle = ::lgSpiOpen(
+    const auto handle = ::lgSpiOpen(
         this->_dev,
         this->_channel,
         this->_baud,
@@ -94,7 +94,7 @@ unsigned short MCP3008::read(const std::uint8_t channel, const Mode m) const {
 
     std::uint8_t rxData[3]{0};
 
-    const int bytesTransferred = ::lgSpiXfer(
+    const auto bytesTransferred = ::lgSpiXfer(
         this->_handle,
         reinterpret_cast<const char*>(txData),
         reinterpret_cast<char*>(rxData),
