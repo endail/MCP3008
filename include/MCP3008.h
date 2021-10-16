@@ -32,14 +32,14 @@
  */
 
 namespace MCP3008Lib {
+
+enum class Mode : std::uint8_t {
+    SINGLE = 1,
+    DIFFERENTIAL = 0
+};
+
 class MCP3008 {
 public:
-
-    enum class Mode : std::uint8_t {
-        SINGLE = 1,
-        DIFFERENTIAL = 0
-    };
-
     static const int DEFAULT_SPI_DEV = 0;
     static const int DEFAULT_SPI_CHANNEL = 0;
     static const int SPI_5V_BAUD = 3600000;
