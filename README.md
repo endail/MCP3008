@@ -4,6 +4,10 @@
 
 Raspberry Pi C++ API for MCP3008 or MCP3004.
 
+- Use with Raspberry Pi
+- Requires [lgpio](http://abyz.me.uk/lg/index.html)
+- Code tested inside [virtual Raspberry Pi Zero/3/4 environments](.github/workflows/buildcheck.yml) on GitHub
+
 ```cpp
 using namespace MCP3008Lib;
 MCP3008 adc;
