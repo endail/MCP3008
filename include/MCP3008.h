@@ -70,5 +70,6 @@ protected:
     int _flags;
 
 };
+
 };
 #endif
