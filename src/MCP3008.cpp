@@ -40,7 +40,14 @@ MCP3008::MCP3008(
 }
 
 MCP3008::~MCP3008() {
-    this->disconnect();
+
+    try {
+        this->disconnect();
+    }
+    catch(...) {
+        //prevent propagation
+    }
+
 }
 
 void MCP3008::connect() {
@@ -86,21 +93,23 @@ unsigned short MCP3008::read(const std::uint8_t channel, const Mode m) const {
          static_cast<std::uint8_t>((channel & 0b00000111) << 4)
         ;
 
-    const std::uint8_t txData[3] = {
+    const std::uint8_t byteCount = 3;
+
+    const std::uint8_t txData[byteCount] = {
         0b00000001, //seven leading zeros and start bit
         ctrl,       //sgl/diff (mode), d2, d1, d0, 4x "don't care" bits
         0b00000000  //8x "don't care" bits
         };
 
-    std::uint8_t rxData[3]{0};
+    std::uint8_t rxData[byteCount]{0};
 
     const auto bytesTransferred = ::lgSpiXfer(
         this->_handle,
         reinterpret_cast<const char*>(txData),
         reinterpret_cast<char*>(rxData),
-        3);
+        byteCount);
 
-    if(bytesTransferred != 3) {
+    if(bytesTransferred != byteCount) {
         throw std::runtime_error("spi transfer failed");
     }
 
