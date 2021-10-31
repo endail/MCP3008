@@ -63,7 +63,7 @@ void MCP3008::connect() {
         this->_flags);
 
     if(handle < 0) {
-        throw std::runtime_error("failed to open spi device");
+        throw std::runtime_error("failed to connect spi device");
     }
 
     this->_handle = handle;
@@ -76,7 +76,9 @@ void MCP3008::disconnect() {
         return;
     }
 
-    ::lgSpiClose(this->_handle);
+    if(::lgSpiClose(this->_handle) != 0) {
+        throw std::runtime_error("failed to disconnect spi device");
+    }
 
     this->_handle = -1;
 
